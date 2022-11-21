@@ -17,33 +17,26 @@ class Tokenizer {
             return null;
         }
 
-        const string = this._string;
-
-        if (!Number.isNaN(Number(string[this._cursor]))) {
-            let number = '';
-            
-            while (!Number.isNaN(Number(string[this._cursor]))) {
-                number += string[this._cursor++];
-            }
+        const string = this._string.slice(this._cursor);
+        let matched;
+        
+        matched = /^\d+/.exec(string);
+        if (matched !== null) {
+            this._cursor += matched[0].length;
 
             return {
                 type: 'NUMBER',
-                value: number
+                value: matched[0]
             };
         }
 
-        if (string[this._cursor] == `"` || string[this._cursor] == `'`) {
-            const quote = string[this._cursor];
-            let str = '';
-            do {
-                str += string[this._cursor++];
-            } while (!this.isEOF() && string[this._cursor] !== quote);
-            
-            str += string[this._cursor++];
+        matched = /"[^"]*"|'[^']*'/.exec(string);
+        if (matched !== null) {
+            this._cursor += matched[0].length;
 
             return {
                 type: 'STRING',
-                value: str
+                value: matched[0]
             };
         }
     }
