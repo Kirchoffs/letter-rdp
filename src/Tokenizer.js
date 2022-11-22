@@ -4,6 +4,7 @@ const Spec = [
     [/^\/\*[\s\S]*?\*\//, null],
     [/^\d+/, 'NUMBER'],
     [/^"[^"]*"|^'[^']*'/, 'STRING'],
+    [/^;/, ';']
 ]
 
 class Tokenizer {
