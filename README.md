@@ -13,6 +13,8 @@
 ### Run the test script
 ```
 >> npm test
+>> npm run test
+>> npm run mocha-test
 ```
 
 ### Single Step Debugging for NodeJS
