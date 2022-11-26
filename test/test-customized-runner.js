@@ -5,29 +5,34 @@ const tests = [
     require('./literal-test'),
     require('./statement-list-test'),
     require('./block-test'),
-    require('./empty-test')
+    require('./empty-test'),
+    require('./math-test')
 ]
 
 const parser = new Parser();
 
-function exec() {
+(function() {
     const program = `
-        /**
-         * Documentary comment
-         */ 
-
         // Single-line comment for 42
         42;
 
         // Single-line comment for "Hello"
         "Hello";
+
+        /**
+         * Documentary comment
+         */
+        1 - 2 / 3;
+
+        /**
+         * Documentary comment
+         */
+        1 - (2 + 3);
     `;
 
     const ast = parser.parse(program);
     console.log(JSON.stringify(ast, null, 2));
-}
-
-exec();
+})();
 
 function test(program, expected) {
     const ast = parser.parse(program);
