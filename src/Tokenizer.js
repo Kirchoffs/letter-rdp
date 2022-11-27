@@ -4,11 +4,14 @@ const Spec = [
     [/^\/\*[\s\S]*?\*\//, null],
     [/^\d+/, 'NUMBER'],
     [/^"[^"]*"|^'[^']*'/, 'STRING'],
+    [/^\w+/, 'IDENTIFIER'],
     [/^;/, ';'],
     [/^\{/, '{'],
     [/^\}/, '}'],
     [/^\(/, '('],
     [/^\)/, ')'],
+    [/^=/, 'SIMPLE_ASSIGN'],
+    [/^[\+\-\*\/]=/, 'COMPLEX_ASSIGN'],
     [/^[+-]/, 'ADDITIVE_OPERATOR'],
     [/^[*/]/, 'MULTIPLICATIVE_OPERATOR']
 ]
