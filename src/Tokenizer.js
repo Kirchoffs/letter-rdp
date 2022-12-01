@@ -1,9 +1,10 @@
 const Spec = [
     [/^\s+/, null],
     [/^\/\/.*/, null],
-    [/^\/\*[\s\S]*?\*\//, null],
+    [/^\/\*[\s\S]*?\*\//, null],    
     [/^\d+/, 'NUMBER'],
     [/^"[^"]*"|^'[^']*'/, 'STRING'],
+    [/^\blet\b/, 'let'],
     [/^\w+/, 'IDENTIFIER'],
     [/^;/, ';'],
     [/^\{/, '{'],
@@ -13,7 +14,8 @@ const Spec = [
     [/^=/, 'SIMPLE_ASSIGN'],
     [/^[\+\-\*\/]=/, 'COMPLEX_ASSIGN'],
     [/^[+-]/, 'ADDITIVE_OPERATOR'],
-    [/^[*/]/, 'MULTIPLICATIVE_OPERATOR']
+    [/^[*/]/, 'MULTIPLICATIVE_OPERATOR'],
+    [/^,/, ','],
 ]
 
 class Tokenizer {

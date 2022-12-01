@@ -19,7 +19,8 @@
 
 ### Single Step Debugging for NodeJS
 ```
->> node inspect program.js
+>> node inspect dst/test-customized-runner.js
+(debug) >> sb('src/Parser.js', 42)
 ```
 
 #### Stepping

@@ -7,7 +7,8 @@ const tests = [
     require('./block-test'),
     require('./empty-test'),
     require('./math-test'),
-    require('./assignment-test')
+    require('./assignment-test'),
+    require('./variable-test')
 ]
 
 const parser = new Parser();
@@ -35,11 +36,29 @@ const parser = new Parser();
 //     console.log(JSON.stringify(ast, null, 2));
 // })();
 
+// (function() {
+//     const program = `
+//         x = 42;
+//         y = x = 42;
+//         z = x + y;
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
+// (function() {
+//     const program = `
+//         let x = 42;
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
 (function() {
     const program = `
-        x = 42;
-        y = x = 42;
-        z = x + y;
+        let x = y = 42;
     `;
 
     const ast = parser.parse(program);
