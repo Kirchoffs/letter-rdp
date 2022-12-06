@@ -5,6 +5,8 @@ const Spec = [
     [/^\d+/, 'NUMBER'],
     [/^"[^"]*"|^'[^']*'/, 'STRING'],
     [/^\blet\b/, 'let'],
+    [/^\bif\b/, 'if'],
+    [/^\belse\b/, 'else'],
     [/^\w+/, 'IDENTIFIER'],
     [/^;/, ';'],
     [/^\{/, '{'],
@@ -15,6 +17,7 @@ const Spec = [
     [/^[\+\-\*\/]=/, 'COMPLEX_ASSIGN'],
     [/^[+-]/, 'ADDITIVE_OPERATOR'],
     [/^[*/]/, 'MULTIPLICATIVE_OPERATOR'],
+    [/^[><]=?/, 'RELATIONAL_OPERATOR'],
     [/^,/, ','],
 ]
 
