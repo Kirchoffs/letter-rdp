@@ -13,7 +13,10 @@ const tests = [
     require('./relational-test'),
     require('./equality-test'),
     require('./logical-test'),
-    require('./unary-test')
+    require('./unary-test'),
+    require('./while-test'),
+    require('./do-while-test'),
+    require('./for-test')
 ]
 
 const parser = new Parser();
@@ -116,9 +119,64 @@ const parser = new Parser();
 //     console.log(JSON.stringify(ast, null, 2));
 // })();
 
+// (function() {
+//     const program = `
+//         -x;
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
+// (function() {
+//     const program = `
+//         while (x > 10) {
+//             x -= 1;
+//         }
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
+// (function() {
+//     const program = `
+//         do {
+//             x -= 1;
+//         } while (x > 10);
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
+// (function() {
+//     const program = `
+//         for (let i = 0; i < 10; i += 1) {
+//             x += i;
+//         }
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
+// (function() {
+//     const program = `
+//         for (; ;) {
+
+//         }
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
 (function() {
     const program = `
-        -x;
+        for (let i = 0, j = 0; i < 10; i += 1) {
+            x += i;
+        }
     `;
 
     const ast = parser.parse(program);

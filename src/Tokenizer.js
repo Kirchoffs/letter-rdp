@@ -11,6 +11,10 @@ const Spec = [
     [/^\bfalse\b/, 'false'],
     [/^\bnull\b/, 'null'],
 
+    [/^\bwhile\b/, 'while'],
+    [/^\bfor\b/, 'for'],
+    [/^\bdo\b/, 'do'],
+
     [/^\d+/, 'NUMBER'],
     [/^"[^"]*"|^'[^']*'/, 'STRING'],
     [/^\w+/, 'IDENTIFIER'],
