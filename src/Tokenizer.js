@@ -27,12 +27,13 @@ const Spec = [
     [/^=/, 'SIMPLE_ASSIGN'],
     [/^[\+\-\*\/]=/, 'COMPLEX_ASSIGN'],
 
-    [/^&&/, 'LOGICAL_AND'],
-    [/^\|\|/, 'LOGICAL_OR'],
-
     [/^[+-]/, 'ADDITIVE_OPERATOR'],
     [/^[*/]/, 'MULTIPLICATIVE_OPERATOR'],
     [/^[><]=?/, 'RELATIONAL_OPERATOR'],
+
+    [/^&&/, 'LOGICAL_AND'],
+    [/^\|\|/, 'LOGICAL_OR'],
+    [/^!/, 'LOGICAL_NOT'],
     
     [/^,/, ','],
 ]

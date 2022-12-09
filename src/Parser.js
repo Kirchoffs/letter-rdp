@@ -349,15 +349,15 @@ class Parser {
 
     /**
      * MultiplicativeExpression
-     *   : PrimaryExpression
-     *   | PrimaryExpression MULTIPLICATIVE_OPERATOR PrimaryExpression
+     *   : UnaryExpression
+     *   | MultiplicativeExpression MULTIPLICATIVE_OPERATOR UnaryExpression
      *   ;
      * 
      *  MultiplicativeExpression -> 
-     *  PrimaryExpression MULTIPLICATIVE_OPERATOR PrimaryExpression MULTIPLICATIVE_OPERATOR ... PrimaryExpression
+     *  UnaryExpression MULTIPLICATIVE_OPERATOR UnaryExpression MULTIPLICATIVE_OPERATOR ... UnaryExpression
      */
      MultiplicativeExpression() {
-        return this._BinaryExpression('PrimaryExpression', 'MULTIPLICATIVE_OPERATOR');
+        return this._BinaryExpression('UnaryExpression', 'MULTIPLICATIVE_OPERATOR');
     }
 
     /**
@@ -381,10 +381,47 @@ class Parser {
     }
 
     /**
+     * UnaryExpression
+     *   : LeftHandSideExpression
+     *   | ADDITIVE_OPERATOR UnaryExpression
+     *   | LOGICAL_NOT UnaryExpression
+     */
+    UnaryExpression() {
+        let operator = null;
+        switch(this._lookahead.type) {
+            case 'ADDITIVE_OPERATOR':
+                operator = this._eat('ADDITIVE_OPERATOR').value;
+                break;
+            case 'LOGICAL_NOT':
+                operator = this._eat('LOGICAL_NOT').value;
+                break;
+        }
+
+        if (operator !== null) {
+            return {
+                type: 'UnaryExpression',
+                operator,
+                argument: this.UnaryExpression()
+            };
+        }
+
+        return this.LeftHandSideExpression();
+    }
+
+    /**
+     * LeftHandSideExpression
+     *   : PrimaryExpression
+     *   ;
+     */
+    LeftHandSideExpression() {
+        return this.PrimaryExpression();
+    }
+
+    /**
      * PrimaryExpression
      *   : Literal
      *   | ParenthesisizedExpression
-     *   | LeftHandSideExpression
+     *   | Identifier
      *   ;
      */
     PrimaryExpression() {
@@ -395,6 +432,8 @@ class Parser {
         switch (this._lookahead.type) {
             case '(': 
                 return this.ParenthesisizedExpression();
+            case 'IDENTIFIER':
+                return this.Identifier();
             default:
                 return this.LeftHandSideExpression();
         }

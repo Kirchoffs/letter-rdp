@@ -12,7 +12,8 @@ const tests = [
     require('./if-test'),
     require('./relational-test'),
     require('./equality-test'),
-    require('./logical-test')
+    require('./logical-test'),
+    require('./unary-test')
 ]
 
 const parser = new Parser();
@@ -106,9 +107,18 @@ const parser = new Parser();
 //     console.log(JSON.stringify(ast, null, 2));
 // })();
 
+// (function() {
+//     const program = `
+//         x > 0 || y < 0 && z == 0;
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
 (function() {
     const program = `
-        x > 0 || y < 0 && z == 0;
+        -x;
     `;
 
     const ast = parser.parse(program);
