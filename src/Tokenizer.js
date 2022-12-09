@@ -1,23 +1,39 @@
 const Spec = [
     [/^\s+/, null],
+
     [/^\/\/.*/, null],
-    [/^\/\*[\s\S]*?\*\//, null],    
-    [/^\d+/, 'NUMBER'],
-    [/^"[^"]*"|^'[^']*'/, 'STRING'],
+    [/^\/\*[\s\S]*?\*\//, null], 
+
     [/^\blet\b/, 'let'],
     [/^\bif\b/, 'if'],
     [/^\belse\b/, 'else'],
+    [/^\btrue\b/, 'true'],
+    [/^\bfalse\b/, 'false'],
+    [/^\bnull\b/, 'null'],
+
+    [/^\d+/, 'NUMBER'],
+    [/^"[^"]*"|^'[^']*'/, 'STRING'],
     [/^\w+/, 'IDENTIFIER'],
+
     [/^;/, ';'],
+
     [/^\{/, '{'],
     [/^\}/, '}'],
     [/^\(/, '('],
     [/^\)/, ')'],
+
+    [/^[!=]=/, 'EQUALITY_OPERATOR'],
+
     [/^=/, 'SIMPLE_ASSIGN'],
     [/^[\+\-\*\/]=/, 'COMPLEX_ASSIGN'],
+
+    [/^&&/, 'LOGICAL_AND'],
+    [/^\|\|/, 'LOGICAL_OR'],
+
     [/^[+-]/, 'ADDITIVE_OPERATOR'],
     [/^[*/]/, 'MULTIPLICATIVE_OPERATOR'],
     [/^[><]=?/, 'RELATIONAL_OPERATOR'],
+    
     [/^,/, ','],
 ]
 
