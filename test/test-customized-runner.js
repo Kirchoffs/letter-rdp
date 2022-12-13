@@ -16,7 +16,8 @@ const tests = [
     require('./unary-test'),
     require('./while-test'),
     require('./do-while-test'),
-    require('./for-test')
+    require('./for-test'),
+    require('./function-declaration-test'),
 ]
 
 const parser = new Parser();
@@ -172,10 +173,25 @@ const parser = new Parser();
 //     console.log(JSON.stringify(ast, null, 2));
 // })();
 
+// (function() {
+//     const program = `
+//         for (let i = 0, j = 0; i < 10; i += 1) {
+//             x += i;
+//         }
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
 (function() {
     const program = `
-        for (let i = 0, j = 0; i < 10; i += 1) {
-            x += i;
+        def square(x) {
+            return x * x;
+        }
+
+        def multiply(x, y) {
+            return x * y;
         }
     `;
 

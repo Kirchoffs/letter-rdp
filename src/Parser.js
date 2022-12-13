@@ -53,6 +53,8 @@ class Parser {
      *   | VariableStatement
      *   | ExpressionStatement
      *   | IterationStatement
+     *   | FunctionDeclaration
+     *   | ReturnStatement
      *   ;
      */
     Statement() {
@@ -65,6 +67,8 @@ class Parser {
             case 'for':
             case 'do':
                 return this.IterationStatement();
+            case 'def': return this.FunctionDeclaration();
+            case 'return': return this.ReturnStatement();
             default: return this.ExpressionStatement();
         }
     }
@@ -291,6 +295,60 @@ class Parser {
     }
 
     /**
+     * FunctionDeclaration
+     *   : 'def' Identifier '(' OptFormalParameterList ')' BlockStatement
+     *   ;
+     */
+    FunctionDeclaration() {
+        this._eat('def');
+        const name = this.Identifier();
+        
+        this._eat('(');
+        const params = this._lookahead.type !== ')' ? this.FormalParameterList() : [];
+        this._eat(')');
+
+        const body = this.BlockStatement();
+        
+        return {
+            type: 'FunctionDeclaration',
+            name,
+            params,
+            body
+        };
+    }
+
+    /**
+     * FormalParameterList
+     *   : Identifier
+     *   | FormalParameterList ',' Identifier
+     *   ;
+     */
+    FormalParameterList() {
+        const params = [];
+
+        do {
+            params.push(this.Identifier());
+        } while (this._lookahead.type === ',' && this._eat(','));
+
+        return params;
+    }
+
+    /**
+     * ReturnStatement
+     *   : 'return' OptExpression ';'
+     */
+    ReturnStatement() {
+        this._eat('return');
+        const argument = this._lookahead.type !== ';' ? this.Expression() : null;
+        this._eat(';');
+
+        return {
+            type: 'ReturnStatement',
+            argument
+        };
+    }
+
+    /**
      * ExpressionStatement
      *   : Expression ';'
      *   ;
@@ -417,15 +475,6 @@ class Parser {
      */
     RelationalExpression() {
         return this._BinaryExpression('AdditiveExpression', 'RELATIONAL_OPERATOR');
-    }
-
-    /**
-     * LeftHandSideExpression
-     *   : Identifier
-     *   ;
-     */
-    LeftHandSideExpression() {
-        return this.Identifier();
     }
 
     /**

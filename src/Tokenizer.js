@@ -15,6 +15,9 @@ const Spec = [
     [/^\bfor\b/, 'for'],
     [/^\bdo\b/, 'do'],
 
+    [/^\bdef\b/, 'def'],
+    [/^\breturn\b/, 'return'],
+
     [/^\d+/, 'NUMBER'],
     [/^"[^"]*"|^'[^']*'/, 'STRING'],
     [/^\w+/, 'IDENTIFIER'],
