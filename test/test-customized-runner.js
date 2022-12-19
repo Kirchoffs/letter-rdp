@@ -18,6 +18,7 @@ const tests = [
     require('./do-while-test'),
     require('./for-test'),
     require('./function-declaration-test'),
+    require('./member-test')
 ]
 
 const parser = new Parser();
@@ -184,15 +185,38 @@ const parser = new Parser();
 //     console.log(JSON.stringify(ast, null, 2));
 // })();
 
+// (function() {
+//     const program = `
+//         def square(x) {
+//             return x * x;
+//         }
+
+//         def multiply(x, y) {
+//             return x * y;
+//         }
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
+// (function() {
+//     const program = `
+//         let str = "Hello World";
+//         let i = 0;
+//         while (i < s.length) {
+//             s[i];
+//             i += 1;
+//         }
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
 (function() {
     const program = `
-        def square(x) {
-            return x * x;
-        }
-
-        def multiply(x, y) {
-            return x * y;
-        }
+        a.b.c['d'];
     `;
 
     const ast = parser.parse(program);
