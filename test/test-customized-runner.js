@@ -18,7 +18,8 @@ const tests = [
     require('./do-while-test'),
     require('./for-test'),
     require('./function-declaration-test'),
-    require('./member-test')
+    require('./member-test'),
+    require('./call-test')
 ]
 
 const parser = new Parser();
@@ -214,9 +215,19 @@ const parser = new Parser();
 //     console.log(JSON.stringify(ast, null, 2));
 // })();
 
+// (function() {
+//     const program = `
+//         a.b.c['d'];
+//     `;
+
+//     const ast = parser.parse(program);
+//     console.log(JSON.stringify(ast, null, 2));
+// })();
+
 (function() {
     const program = `
-        a.b.c['d'];
+        square(2);
+        getCallback()();
     `;
 
     const ast = parser.parse(program);
