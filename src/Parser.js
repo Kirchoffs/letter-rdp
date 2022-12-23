@@ -54,6 +54,7 @@ class Parser {
      *   | ExpressionStatement
      *   | IterationStatement
      *   | FunctionDeclaration
+     *   | ClassDeclaration
      *   | ReturnStatement
      *   ;
      */
@@ -69,6 +70,7 @@ class Parser {
                 return this.IterationStatement();
             case 'def': return this.FunctionDeclaration();
             case 'return': return this.ReturnStatement();
+            case 'class': return this.ClassDeclararion();
             default: return this.ExpressionStatement();
         }
     }
@@ -349,6 +351,35 @@ class Parser {
     }
 
     /**
+     * ClassDeclararion
+     *   : 'class' Identifier OptClassExtends BlockStatement
+     */
+    ClassDeclararion() {
+        this._eat('class');
+        
+        const id = this.Identifier();
+        const superClass = this._lookahead.type === 'extends' ? this.ClassExtends() : null;
+        const body = this.BlockStatement();
+
+        return {
+            type: 'ClassDeclaration',
+            id,
+            superClass,
+            body
+        };
+    }
+
+    /**
+     * ClassExtends
+     *   : 'extends' Identifier
+     *   ;
+     */
+    ClassExtends() {
+        this._eat('extends');
+        return this.Identifier();
+    }
+
+    /**
      * ExpressionStatement
      *   : Expression ';'
      *   ;
@@ -588,6 +619,10 @@ class Parser {
      *   ;
      */
     CallMemberExpression() {
+        if (this._lookahead.type === 'super') {
+            return this._CallExpression(this.SuperExpression());
+        }
+
         const member = this.MemberExpression();
         
         if (this._lookahead.type === '(') {
@@ -689,6 +724,8 @@ class Parser {
      *   : Literal
      *   | ParenthesisizedExpression
      *   | Identifier
+     *   | ThisExpression
+     *   | NewExpression
      *   ;
      */
     PrimaryExpression() {
@@ -701,8 +738,12 @@ class Parser {
                 return this.ParenthesisizedExpression();
             case 'IDENTIFIER':
                 return this.Identifier();
+            case 'this':
+                return this.ThisExpression();
+            case 'new': 
+                return this.NewExpression();
             default:
-                return this.LeftHandSideExpression();
+                throw new SyntaxError('Unexpected primary expression');
         }
     }
 
@@ -745,6 +786,46 @@ class Parser {
         }
 
         throw new SyntaxError(`Literal: unexpected literal production`);
+    }
+
+    /**
+     * ThisExpression
+     *   : 'this'
+     *   ;
+     */
+    ThisExpression() {
+        this._eat('this');
+        return  {
+            type: 'ThisExpression'
+        };
+    }
+
+    /**
+     * SuperExpression
+     *   : 'super'
+     *   ;
+     */
+    SuperExpression() {
+        this._eat('super');
+        return {
+            type: 'Super'
+        };
+    }
+
+    /**
+     * NewExpression
+     *   : 'new' MemberExpression Arguments
+     *   ;
+     * 
+     * e.g. new BarNamespace.FooClass()
+     */
+    NewExpression() {
+        this._eat('new');
+        return {
+            type: 'NewExpression',
+            callee: this.MemberExpression(),
+            arguments: this.Arguments()
+        }
     }
 
     /**

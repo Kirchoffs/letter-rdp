@@ -39,3 +39,9 @@
 `setBreakpoint('script.js', 1)`, `sb(...)`: Set breakpoint on first line of script.js  
 `setBreakpoint('script.js', 1, 'num < 4')`, `sb(...)`: Set conditional breakpoint on first line of script.js that only breaks when num < 4 evaluates to true  
 `clearBreakpoint('script.js', 1)`, `cb(...)`: Clear breakpoint in script.js on line 1  
+
+### Structure
+CallMemberExpression -> MemberExpression | CallExpression
+MemberExpression -> PrimaryExpression
+PrimaryExpression -> Literal | ParenthesisizedExpression | Identifier | ThisExpression | NewExpression
+NewExpression -> MemberExpression & Arguments
